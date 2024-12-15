@@ -40,8 +40,8 @@ const ResumeEditor = () => {
           <div className="hidden md:flex md:w-1/2">Right</div>
         </div>
       </main>
-      <footer className="w-full border-t px-3 py-5">
-        <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3">
+      <footer className="w-full border-t">
+        <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3 px-3 py-5">
           <div className="flex items-center gap-3">
             <Button variant="secondary">Previous Step</Button>
             <Button>Next Step</Button>
