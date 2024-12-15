@@ -7,11 +7,11 @@ import { ThemeProvider } from "next-themes";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: {
-    template: "%s - AI Resume Builder",
-    absolute: "AI Resume Builder",
+    template: "%s - Mortfolio",
+    absolute: "Mortfolio",
   },
   description:
-    "AI Resume Builder is the easiet way to create a professional resume to help you land your dream job.",
+    "Mortfolio is the easiet way to create a professional resume with the help of AI.",
 };
 
 export default function RootLayout({
