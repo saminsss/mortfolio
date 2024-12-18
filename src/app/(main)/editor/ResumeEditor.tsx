@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { steps } from "./steps";
 import Breadcrumbs from "./Breadcrumbs";
 import Footer from "./Footer";
 import { ResumeValues } from "@/lib/validation";
+import ResumePreviewSection from "./ResumePreviewSection";
 
 const ResumeEditor = () => {
   const searchParams = useSearchParams();
@@ -23,6 +24,9 @@ const ResumeEditor = () => {
     (step) => step.key === currentStep,
   )?.component;
 
+  useEffect(() => {
+    console.log(resumeData);
+  }, [resumeData]);
   return (
     <div className="flex grow flex-col">
       <header className="space-y-1.5 border-b px-3 py-5 text-center">
@@ -44,9 +48,10 @@ const ResumeEditor = () => {
             )}
           </div>
           <div className="grow md:border-r"></div>
-          <div className="hidden md:flex md:w-1/2">
-            <pre>{JSON.stringify(resumeData, null, 2)}</pre>
-          </div>
+          <ResumePreviewSection
+            resumeData={resumeData}
+            setResumeData={setResumeData}
+          />
         </div>
       </main>
       <Footer currentStep={currentStep} setCurrentStep={setStep} />
