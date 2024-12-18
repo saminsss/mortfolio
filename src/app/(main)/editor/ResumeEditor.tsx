@@ -24,9 +24,6 @@ const ResumeEditor = () => {
     (step) => step.key === currentStep,
   )?.component;
 
-  useEffect(() => {
-    console.log(resumeData);
-  }, [resumeData]);
   return (
     <div className="flex grow flex-col">
       <header className="space-y-1.5 border-b px-3 py-5 text-center">
