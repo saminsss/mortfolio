@@ -238,7 +238,7 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
               {edu.startDate && (
                 <span>
                   {edu.startDate &&
-                    `${formatDate(edu.startDate, "MM/yyyy")} ${edu.endDate ? `- ${formatDate(edu.endDate, "MM/yyyy")}` : ""}`}
+                    `${formatDate(edu.startDate, "MM/yyyy")} ${edu.endDate ? `- ${formatDate(edu.endDate, "MM/yyyy")}` : "- Present"}`}
                 </span>
               )}
             </div>
