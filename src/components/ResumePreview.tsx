@@ -7,15 +7,19 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Badge } from "./ui/badge";
 
-interface ResumePreviewProps {
+type ResumePreviewProps = {
   resumeData: ResumeValues;
   className?: string;
 }
 
-export default function ResumePreview({
+type ResumeSectionProps = {
+  resumeData: ResumeValues;
+}
+
+const ResumePreview = ({
   resumeData,
   className,
-}: ResumePreviewProps) {
+}: ResumePreviewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { width } = useDimensions(containerRef);
@@ -44,11 +48,7 @@ export default function ResumePreview({
   );
 }
 
-interface ResumeSectionProps {
-  resumeData: ResumeValues;
-}
-
-function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
+const PersonalInfoHeader = ({ resumeData }: ResumeSectionProps) => {
   const {
     photo,
     firstName,
@@ -121,7 +121,7 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
   );
 }
 
-function SummarySection({ resumeData }: ResumeSectionProps) {
+const SummarySection = ({ resumeData }: ResumeSectionProps) => {
   const { summary, colorHex } = resumeData;
 
   if (!summary) return null;
@@ -149,7 +149,7 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
   );
 }
 
-function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
+const WorkExperienceSection = ({ resumeData }: ResumeSectionProps) => {
   const { workExperiences, colorHex } = resumeData;
 
   const workExperiencesNotEmpty = workExperiences?.filter(
@@ -200,7 +200,7 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
   );
 }
 
-function EducationSection({ resumeData }: ResumeSectionProps) {
+const EducationSection = ({ resumeData }: ResumeSectionProps) => {
   const { educations, colorHex } = resumeData;
 
   const educationsNotEmpty = educations?.filter(
@@ -250,7 +250,7 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
   );
 }
 
-function SkillsSection({ resumeData }: ResumeSectionProps) {
+const SkillsSection = ({ resumeData }: ResumeSectionProps) => {
   const { skills, colorHex, borderStyle } = resumeData;
 
   if (!skills?.length) return null;
@@ -295,3 +295,5 @@ function SkillsSection({ resumeData }: ResumeSectionProps) {
     </>
   );
 }
+
+export default ResumePreview;
