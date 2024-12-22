@@ -19,7 +19,7 @@ const GeneralInfoForm = ({ resumeData, setResumeData }: EditorFormProps) => {
     resolver: zodResolver(generalInfoSchema),
     defaultValues: {
       title: resumeData.title ?? "",
-      desciption: resumeData.desciption ?? "",
+      description: resumeData.description ?? "",
     },
   });
 
@@ -59,7 +59,7 @@ const GeneralInfoForm = ({ resumeData, setResumeData }: EditorFormProps) => {
           />
           <FormField
             control={form.control}
-            name="desciption"
+            name="description"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Description</FormLabel>
