@@ -7,13 +7,20 @@ import Breadcrumbs from "./Breadcrumbs";
 import Footer from "./Footer";
 import { ResumeValues } from "@/lib/validation";
 import ResumePreviewSection from "./ResumePreviewSection";
-import { cn } from "@/lib/utils";
+import { cn, mapToResumeValues } from "@/lib/utils";
 import useAutoSaveResume from "../../../hooks/editor/useAutoSaveResume";
 import useUnloadWarning from "@/hooks/useUnloadWarning";
+import { ResumeServerData } from "@/lib/types";
 
-const ResumeEditor = () => {
+type ResumeEditorProps = {
+  resumeToEdit: ResumeServerData | null;
+};
+
+const ResumeEditor = ({ resumeToEdit }: ResumeEditorProps) => {
   const searchParams = useSearchParams();
-  const [resumeData, setResumeData] = useState<ResumeValues>({});
+  const [resumeData, setResumeData] = useState<ResumeValues>(
+    resumeToEdit ? mapToResumeValues(resumeToEdit) : {},
+  );
   const [showSmResumePreview, setShowSmResumePreview] = useState(false);
   const { isSaving, hasUnsavedChanges } = useAutoSaveResume(resumeData);
   useUnloadWarning(hasUnsavedChanges);

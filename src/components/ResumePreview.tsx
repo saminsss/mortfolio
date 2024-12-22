@@ -1,3 +1,5 @@
+"use client";
+
 import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 import useDimensions from "@/hooks/useDimensions";
 import { cn } from "@/lib/utils";
@@ -10,16 +12,13 @@ import { Badge } from "./ui/badge";
 type ResumePreviewProps = {
   resumeData: ResumeValues;
   className?: string;
-}
+};
 
 type ResumeSectionProps = {
   resumeData: ResumeValues;
-}
+};
 
-const ResumePreview = ({
-  resumeData,
-  className,
-}: ResumePreviewProps) => {
+const ResumePreview = ({ resumeData, className }: ResumePreviewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { width } = useDimensions(containerRef);
@@ -46,7 +45,7 @@ const ResumePreview = ({
       </div>
     </div>
   );
-}
+};
 
 const PersonalInfoHeader = ({ resumeData }: ResumeSectionProps) => {
   const {
@@ -62,7 +61,9 @@ const PersonalInfoHeader = ({ resumeData }: ResumeSectionProps) => {
     borderStyle,
   } = resumeData;
 
-  const [photoSrc, setPhotoSrc] = useState(photo && photo instanceof File ? "" : photo);
+  const [photoSrc, setPhotoSrc] = useState(
+    photo && photo instanceof File ? "" : photo,
+  );
 
   useEffect(() => {
     const objectUrl = photo instanceof File ? URL.createObjectURL(photo) : "";
@@ -119,7 +120,7 @@ const PersonalInfoHeader = ({ resumeData }: ResumeSectionProps) => {
       </div>
     </div>
   );
-}
+};
 
 const SummarySection = ({ resumeData }: ResumeSectionProps) => {
   const { summary, colorHex } = resumeData;
@@ -147,7 +148,7 @@ const SummarySection = ({ resumeData }: ResumeSectionProps) => {
       </div>
     </>
   );
-}
+};
 
 const WorkExperienceSection = ({ resumeData }: ResumeSectionProps) => {
   const { workExperiences, colorHex } = resumeData;
@@ -198,7 +199,7 @@ const WorkExperienceSection = ({ resumeData }: ResumeSectionProps) => {
       </div>
     </>
   );
-}
+};
 
 const EducationSection = ({ resumeData }: ResumeSectionProps) => {
   const { educations, colorHex } = resumeData;
@@ -248,7 +249,7 @@ const EducationSection = ({ resumeData }: ResumeSectionProps) => {
       </div>
     </>
   );
-}
+};
 
 const SkillsSection = ({ resumeData }: ResumeSectionProps) => {
   const { skills, colorHex, borderStyle } = resumeData;
@@ -294,6 +295,6 @@ const SkillsSection = ({ resumeData }: ResumeSectionProps) => {
       </div>
     </>
   );
-}
+};
 
 export default ResumePreview;
