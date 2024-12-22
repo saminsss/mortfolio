@@ -27,7 +27,7 @@ export const saveResume = async (values: ResumeValues) => {
 
   let newPhotoUrl: string | undefined | null = undefined;
 
-  if (photo && photo.type.startsWith("image/")) {
+  if (photo && photo instanceof File) {
     if (existingResume?.photoUrl) {
       await del(existingResume.photoUrl);
     }
