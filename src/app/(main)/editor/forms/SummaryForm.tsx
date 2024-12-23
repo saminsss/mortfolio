@@ -44,12 +44,12 @@ export default function SummaryForm({
         </p>
       </div>
       <Form {...form}>
-        <form className="space-y-3">
+        <form className="!mt-1 space-y-3">
           <FormField
             control={form.control}
             name="summary"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex flex-col items-center">
                 <FormLabel className="sr-only">Professional summary</FormLabel>
                 <FormControl>
                   <Textarea
