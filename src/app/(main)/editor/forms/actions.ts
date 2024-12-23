@@ -8,10 +8,25 @@ import {
   WorkExperience,
 } from "@/lib/validation";
 import openai from "@/lib/openai";
+import { auth } from "@clerk/nextjs/server";
+import { getUserSubscriptionLevel } from "@/lib/subscription";
+import { canUseAiTools } from "@/lib/permissions";
 
 const FALLBACK_STRING = "N/A";
 
 export async function generateSummary(input: GenerateSummaryInput) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  const subscriptionLevel = await getUserSubscriptionLevel(userId);
+
+  if (!canUseAiTools(subscriptionLevel)) {
+    throw new Error("Upgrade your subsciption to sue this feature");
+  }
+
   const { jobTitle, workExperiences, educations, skills } =
     generateSummarySchema.parse(input);
 
@@ -76,6 +91,18 @@ export async function generateSummary(input: GenerateSummaryInput) {
 export async function generateWorkExperience(
   input: GenerateWorkExperienceInput,
 ) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  const subscriptionLevel = await getUserSubscriptionLevel(userId);
+
+  if (!canUseAiTools(subscriptionLevel)) {
+    throw new Error("Upgrade your subsciption to sue this feature");
+  }
+
   const { description } = generateWorkExperienceSchema.parse(input);
 
   const systemMessage = `
