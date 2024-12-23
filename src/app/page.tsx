@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-100 px-5 py-12 text-center text-gray-900 md:flex-row md:text-start lg:gap-12">
+    <main className="bg-landing flex min-h-screen flex-col items-center justify-center gap-6 px-5 py-12 text-center text-gray-900 md:flex-row md:text-start lg:gap-12">
       <div className="max-w-prose space-y-3">
         <Image
           src={logo}
