@@ -6,7 +6,6 @@ import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { set } from "date-fns";
 import { createCheckoutSession } from "./actions";
 import { env } from "@/env";
 
@@ -23,9 +22,9 @@ export default function PremiumModal() {
   const handlePremiumClick = async (priceId: string) => {
     try {
       setLoading(true);
-      const riderectUrl = await createCheckoutSession(priceId);
-      if (riderectUrl) {
-        window.location.href = riderectUrl;
+      const redirect = await createCheckoutSession(priceId);
+      if (redirect) {
+        window.location.href = redirect;
       }
     } catch (error) {
       console.error(error);
