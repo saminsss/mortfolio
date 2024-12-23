@@ -12,12 +12,12 @@ import { useToast } from "@/hooks/use-toast";
 import { ResumeServerData } from "@/lib/types";
 import { mapToResumeValues } from "@/lib/utils";
 import { formatDate } from "date-fns";
-import { MoreVertical, Trash2 } from "lucide-react";
+import { MoreVertical, Printer, Trash2 } from "lucide-react";
 import Link from "next/link";
-import React, { useState, useTransition } from "react";
+import React, { useRef, useState, useTransition } from "react";
 import { deleteResume } from "./actions";
-import { Dialog } from "@radix-ui/react-dialog";
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -25,12 +25,19 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import LoadingButton from "@/components/LoadingButton";
+import { useReactToPrint } from "react-to-print";
 
 type ResumeItemProps = {
   resume: ResumeServerData;
 };
 
 const ResumeItem = ({ resume }: ResumeItemProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const reactToPrintFn = useReactToPrint({
+    contentRef: contentRef as React.RefObject<HTMLDivElement>,
+    documentTitle: resume.title || "Untitled",
+  });
   const wasUpdated = resume.updatedAt !== resume.createdAt;
   return (
     <div className="group relative rounded-lg border border-transparent bg-secondary p-3 transition-colors hover:border-border">
@@ -55,33 +62,37 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
           className="relative inline-block w-full"
         >
           <ResumePreview
+            contentRef={contentRef as React.RefObject<HTMLDivElement>}
             resumeData={mapToResumeValues(resume)}
             className="overflow-hidden shadow-sm transition-shadow group-hover:shadow-lg"
           />
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
         </Link>
       </div>
-      <MoreMenu resumeId={resume.id} />
+      <MoreMenu
+        resumeId={resume.id}
+        onPrintClick={reactToPrintFn}
+        className="absolute right-1 top-1 opacity-0 transition-opacity group-hover:opacity-100"
+      />
     </div>
   );
 };
 
 type MoreMenuProps = {
   resumeId: string;
+  onPrintClick: () => void;
+  className?: string;
 };
-const MoreMenu = ({ resumeId }: MoreMenuProps) => {
+const MoreMenu = ({ resumeId, onPrintClick, className }: MoreMenuProps) => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-1 top-1 opacity-0 transition-opacity group-hover:opacity-100"
-          >
+          <Button variant="ghost" size="icon" className={className}>
             <MoreVertical className="size-4" />
+            <span className="sr-only">More</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -91,6 +102,13 @@ const MoreMenu = ({ resumeId }: MoreMenuProps) => {
           >
             <Trash2 className="size-4"></Trash2>
             Delete
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex items-center gap-2"
+            onClick={() => onPrintClick()}
+          >
+            <Printer className="size-4" />
+            Print
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
