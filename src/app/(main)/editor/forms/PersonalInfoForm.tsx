@@ -69,7 +69,7 @@ const PersonalInfoForm = ({ resumeData, setResumeData }: EditorFormProps) => {
                       ref={photoInputRef}
                     />
                     <Button
-                      variant="destructive"
+                      variant="secondary"
                       type="button"
                       onClick={() => {
                         fieldValues.onChange(null);
